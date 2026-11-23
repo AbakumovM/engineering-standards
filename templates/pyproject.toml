@@ -1,0 +1,32 @@
+# Фрагменты pyproject.toml для нового проекта.
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+# S — безопасность (SEC-05: S608), ASYNC — блокировки в async (ADP-03), BLE — голый except (OBS-04),
+# DTZ — время без зоны (OPS-01), LOG/G — логирование (OBS-01), PERF — производительность Python.
+select = ["E", "F", "W", "I", "UP", "B", "SIM", "ASYNC", "RUF", "PT", "TID",
+          "S", "BLE", "DTZ", "LOG", "G", "PERF"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["S101", "S105", "S106"]          # assert и фиктивные пароли в тестах
+
+[tool.ruff.lint.flake8-tidy-imports]
+ban-relative-imports = "parents"
+
+[tool.mypy]
+strict = true
+python_version = "3.12"
+plugins = ["pydantic.mypy"]
+# При переносе легаси: strict только для нового кода
+# files = ["src/app/infrastructure", "src/app/assets"]
+# [[tool.mypy.overrides]]
+# module = ["app.legacy_module"]
+# follow_imports = "silent"
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "session"
+testpaths = ["tests"]
